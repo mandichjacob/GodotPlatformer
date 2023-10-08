@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk4ntway2uuoy"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_g3in8"]
+[ext_resource type="Texture2D" uid="uid://bs4y7m3ahugal" path="res://Happy-FoxTransparent.png" id="2_2kyj8"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="Area2D" parent="."]
+script = ExtResource("1_g3in8")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("2_2kyj8")
