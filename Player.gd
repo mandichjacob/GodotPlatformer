@@ -1,6 +1,10 @@
-extends Area2D
+extends CharacterBody2D
 
-@export var speed = 400
+const grav = 20
+const jumpspeed = 300
+const floor = Vector2(0,-1)
+@export var speed = 40
+var maxspeed =300
 var screen_size
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -9,19 +13,23 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	var velocity = Vector2.ZERO
-	if Input.is_action_pressed("move_right"):
-		velocity.x+=1
-	if Input.is_action_pressed("move_left"):
-		velocity.x-=1
-	if Input.is_action_pressed("move_down"):
-		velocity.y+=1
-	if Input.is_action_pressed("move_up"):
-		velocity.y-=1
-		
+func _physics_process(delta):
 	
-	if velocity.length() > 0:
-		velocity = velocity.normalized()*speed
+	if Input.is_action_pressed("move_right"):
+		velocity.x+= speed
+	elif Input.is_action_pressed("move_left"):
+		velocity.x-= speed
+	else:
+		velocity.x=0
+	if Input.is_action_pressed("move_up"):
+		if is_on_floor():
+			velocity.y-=jumpspeed
+		
+	velocity.y+=grav
+	if velocity.x > maxspeed:
+		velocity.x=maxspeed
+	if velocity.x < -maxspeed:
+		velocity.x=-maxspeed
+	move_and_slide()
 	position += velocity * delta
 	pass
